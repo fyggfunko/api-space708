@@ -1,4 +1,36 @@
 'use strict';
+
+// Decorative trading/AI atmosphere — no claims, no fake metrics.
+(function injectAtmosphere() {
+  if (document.querySelector('.atmosphere')) return;
+  const atm = document.createElement('div');
+  atm.className = 'atmosphere';
+  atm.setAttribute('aria-hidden', 'true');
+  atm.innerHTML = `
+    <div class="atmosphere-grid"></div>
+    <div class="atmosphere-orb a"></div>
+    <div class="atmosphere-orb b"></div>
+    <div class="atmosphere-nodes">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <svg class="atmosphere-chart" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="chartStroke" x1="0" y1="0" x2="520" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#4f8cff"/>
+          <stop offset="0.55" stop-color="#2ee6d6"/>
+          <stop offset="1" stop-color="#3dd68c"/>
+        </linearGradient>
+        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="220" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#2ee6d6" stop-opacity="0.28"/>
+          <stop offset="1" stop-color="#2ee6d6" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path class="area" d="M0 160 C40 150 70 120 110 128 C150 136 170 90 210 96 C250 102 270 70 310 78 C350 86 370 50 410 58 C450 66 480 40 520 46 L520 220 L0 220 Z"/>
+      <path class="line" d="M0 160 C40 150 70 120 110 128 C150 136 170 90 210 96 C250 102 270 70 310 78 C350 86 370 50 410 58 C450 66 480 40 520 46"/>
+    </svg>`;
+  document.body.prepend(atm);
+})();
+
 // Locale selection does not depend on the visitor's identity or traffic source.
 const languageDialog = document.getElementById('language-dialog');
 // This explicit navigation flag suppresses the dialog only during a language switch.
@@ -59,7 +91,7 @@ async function loadVideo() {
     player.id = 'video_main';
     player.setAttribute('playback-id', shell.dataset.playback);
     player.setAttribute('stream-type', 'on-demand');
-    player.setAttribute('accent-color', '#1f5c57');
+    player.setAttribute('accent-color', '#2ee6d6');
     player.setAttribute('playsinline', '');
     player.setAttribute('preload', 'metadata');
     player.setAttribute('disable-tracking', '');

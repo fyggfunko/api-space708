@@ -4,13 +4,14 @@ Clean bilingual (FR/DE) presentation landing with Mux video steps and an optiona
 
 ## Design direction
 
-White / institutional visual system aimed at reducing typical Google Ads landing complaints:
+Trading / AI fintech look:
 
-- Calm teal accent instead of purple funnel styling
-- Source Serif 4 + Source Sans 3
-- Light video placeholder (not a dark “VSL player” shell)
-- Soft status gate instead of urgency-countdown look
-- Explicit risk, operator, privacy and terms sections
+- Dark navy canvas with cyan–blue–emerald accents
+- Animated chart, grid and soft orbs (decorative only — no fake metrics)
+- Space Grotesk + IBM Plex Sans
+- Soft status gate instead of urgency-countdown copy
+- Risk / operator / privacy blocks retained for policy prep
+
 
 ## Included
 
