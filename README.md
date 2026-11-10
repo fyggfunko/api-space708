@@ -4,13 +4,13 @@ Clean bilingual (FR/DE) presentation landing with Mux video steps and an optiona
 
 ## Design direction
 
-Trading / AI fintech look:
+Quant-inspired trading/AI look:
 
-- Dark navy canvas with cyan–blue–emerald accents
-- Animated chart, grid and soft orbs (decorative only — no fake metrics)
-- Bricolage Grotesque + Source Sans 3 (IBM Plex Mono for timers)
+- Charcoal canvas, warm peach/orange CTAs, green status badge
+- Instrument Sans typography
+- Subtle grid + warm node atmosphere (decorative only)
+- Centered hero, pill buttons
 - Soft status gate instead of urgency-countdown copy
-- Risk / operator / privacy blocks retained for policy prep
 
 
 ## Included

@@ -1,36 +1,6 @@
 'use strict';
 
-// Font stack variants: studio (default) | editorial | terminal
-(function applyFontVariant() {
-  const allowed = new Set(['studio', 'editorial', 'terminal']);
-  const params = new URL(location.href).searchParams;
-  const fromQuery = params.get('fonts');
-  const stored = localStorage.getItem('intart-fonts');
-  const choice = allowed.has(fromQuery) ? fromQuery : (allowed.has(stored) ? stored : 'studio');
-  if (choice === 'studio') document.documentElement.removeAttribute('data-fonts');
-  else document.documentElement.setAttribute('data-fonts', choice);
-  if (fromQuery && allowed.has(fromQuery)) localStorage.setItem('intart-fonts', fromQuery);
-
-  if (document.body && !document.querySelector('.font-switcher')) {
-    const nav = document.createElement('nav');
-    nav.className = 'font-switcher';
-    nav.setAttribute('aria-label', 'Font variations');
-    nav.innerHTML = [
-      ['studio', 'Studio'],
-      ['editorial', 'Editorial'],
-      ['terminal', 'Terminal'],
-    ].map(([id, label]) => {
-      const url = new URL(location.href);
-      url.searchParams.set('fonts', id);
-      url.searchParams.set('language-selected', document.documentElement.lang);
-      const current = choice === id ? ' aria-current="true"' : '';
-      return `<a href="${url.pathname + url.search}"${current}>${label}</a>`;
-    }).join('');
-    document.body.append(nav);
-  }
-})();
-
-// Decorative trading/AI atmosphere — no claims, no fake metrics.
+// Decorative Quant-like atmosphere — grid + warm nodes, no claims/metrics.
 (function injectAtmosphere() {
   if (document.querySelector('.atmosphere')) return;
   const atm = document.createElement('div');
@@ -41,23 +11,9 @@
     <div class="atmosphere-orb a"></div>
     <div class="atmosphere-orb b"></div>
     <div class="atmosphere-nodes">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <svg class="atmosphere-chart" viewBox="0 0 520 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="chartStroke" x1="0" y1="0" x2="520" y2="0" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#4f8cff"/>
-          <stop offset="0.55" stop-color="#2ee6d6"/>
-          <stop offset="1" stop-color="#3dd68c"/>
-        </linearGradient>
-        <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="220" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#2ee6d6" stop-opacity="0.28"/>
-          <stop offset="1" stop-color="#2ee6d6" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <path class="area" d="M0 160 C40 150 70 120 110 128 C150 136 170 90 210 96 C250 102 270 70 310 78 C350 86 370 50 410 58 C450 66 480 40 520 46 L520 220 L0 220 Z"/>
-      <path class="line" d="M0 160 C40 150 70 120 110 128 C150 136 170 90 210 96 C250 102 270 70 310 78 C350 86 370 50 410 58 C450 66 480 40 520 46"/>
-    </svg>`;
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>`;
   document.body.prepend(atm);
 })();
 
@@ -121,7 +77,7 @@ async function loadVideo() {
     player.id = 'video_main';
     player.setAttribute('playback-id', shell.dataset.playback);
     player.setAttribute('stream-type', 'on-demand');
-    player.setAttribute('accent-color', '#2ee6d6');
+    player.setAttribute('accent-color', '#f0b36a');
     player.setAttribute('playsinline', '');
     player.setAttribute('preload', 'metadata');
     player.setAttribute('disable-tracking', '');
