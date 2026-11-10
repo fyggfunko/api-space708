@@ -8,7 +8,7 @@ Trading / AI fintech look:
 
 - Dark navy canvas with cyan–blue–emerald accents
 - Animated chart, grid and soft orbs (decorative only — no fake metrics)
-- Space Grotesk + IBM Plex Sans
+- Bricolage Grotesque + Source Sans 3 (IBM Plex Mono for timers)
 - Soft status gate instead of urgency-countdown copy
 - Risk / operator / privacy blocks retained for policy prep
 
