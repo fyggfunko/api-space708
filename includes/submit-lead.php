@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/lead-common.php';
-require_once __DIR__ . '/../send.php';
 lead_session();
 $lang = ($_POST['language'] ?? 'fr') === 'de' ? 'de' : 'fr';
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -30,6 +29,7 @@ if (!$first || !$last || !filter_var($email, FILTER_VALIDATE_EMAIL)
 }
 if (time() - ($_SESSION['last_attempt'] ?? 0) < 60) lead_fail($lang, 'rate', 429);
 $config = require __DIR__ . '/yourleads-config.php';
+// TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID are read from the server environment.
 $telegramReady = (getenv('TELEGRAM_BOT_TOKEN') ?: '') !== '' && (getenv('TELEGRAM_CHAT_ID') ?: '') !== '';
 $crmReady = $config['token'] !== '';
 if ((!$telegramReady && !$crmReady) || !function_exists('curl_init')) lead_fail($lang, 'unavailable', 503);
@@ -74,10 +74,58 @@ if ($crmReady) {
     }
     if (!lead_accepted($code, $result)) lead_fail($lang, 'rejected', 422);
 }
-if ($telegramReady && !telegram_notify_lead($lead)) lead_fail($lang, 'uncertain', 502);
+if ($telegramReady && !submit_lead_telegram($lead)) lead_fail($lang, 'uncertain', 502);
 $_SESSION['accepted_submission'] = $submission;
 $_SESSION['lead_success'] = true;
 $_SESSION['lead_success_at'] = time();
 // Original local confirmation route, not the API-provided autologin URL.
 header('Location: index3.php', true, 303);
 exit;
+
+function submit_lead_telegram(array $lead): bool
+{
+    $token = getenv('TELEGRAM_BOT_TOKEN') ?: '';
+    $chatId = getenv('TELEGRAM_CHAT_ID') ?: '';
+    if ($token === '' || $chatId === '' || !function_exists('curl_init')) {
+        return false;
+    }
+    $escape = static function (string $value): string {
+        return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    };
+    $text = implode("\n", [
+        '<b>Nouvelle demande</b>',
+        'Prénom: ' . $escape((string) ($lead['first_name'] ?? '')),
+        'Nom: ' . $escape((string) ($lead['last_name'] ?? '')),
+        'E-mail: ' . $escape((string) ($lead['email'] ?? '')),
+        'Téléphone: ' . $escape((string) ($lead['phone'] ?? '')),
+        'Pays: ' . $escape((string) ($lead['country_code'] ?? '')),
+        'Langue: ' . $escape((string) ($lead['language'] ?? '')),
+        'IP: ' . $escape((string) ($lead['ip'] ?? '')),
+    ]);
+    $curl = curl_init('https://api.telegram.org/bot' . $token . '/sendMessage');
+    curl_setopt_array($curl, [
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_POSTFIELDS => json_encode([
+            'chat_id' => $chatId,
+            'text' => $text,
+            'parse_mode' => 'HTML',
+            'disable_web_page_preview' => true,
+        ], JSON_UNESCAPED_UNICODE),
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT => 15,
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYHOST => 2,
+        CURLOPT_FOLLOWLOCATION => false,
+    ]);
+    $response = curl_exec($curl);
+    $code = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $networkError = curl_errno($curl);
+    curl_close($curl);
+    if ($networkError || !is_string($response) || $code < 200 || $code >= 300) {
+        return false;
+    }
+    $result = json_decode($response, true);
+    return is_array($result) && !empty($result['ok']);
+}
