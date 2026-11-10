@@ -17,32 +17,6 @@
   document.body.prepend(atm);
 })();
 
-// Locale selection does not depend on the visitor's identity or traffic source.
-const languageDialog = document.getElementById('language-dialog');
-// This explicit navigation flag suppresses the dialog only during a language switch.
-const languageURL = new URL(location.href);
-const selectedLanguage = languageURL.searchParams.get('language-selected');
-const skipDialog = selectedLanguage === document.documentElement.lang;
-if (selectedLanguage !== null) {
-  languageURL.searchParams.delete('language-selected');
-  history.replaceState(null, '', languageURL);
-}
-document.querySelectorAll('[data-language]').forEach(link => {
-  link.addEventListener('click', event => {
-    if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    if (link.dataset.language === document.documentElement.lang) {
-      languageDialog.close();
-      document.getElementById('load-video').focus();
-      return;
-    }
-    const target = new URL(link.href);
-    target.search = location.search;
-    target.searchParams.set('language-selected', link.dataset.language);
-    location.assign(target);
-  });
-});
-if (document.body.dataset.step === '1' && !skipDialog) languageDialog.showModal();
 const shell = document.getElementById('video-shell');
 const loadButton = document.getElementById('load-video');
 const status = document.getElementById('video-status');

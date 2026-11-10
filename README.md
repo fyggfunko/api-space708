@@ -1,6 +1,6 @@
 # intartlecture — Google Ads preparation build
 
-Clean bilingual (FR/DE) presentation landing with Mux video steps and an optional lead form.
+French presentation landing with Mux video steps and an optional lead form.
 
 ## Design direction
 
@@ -14,9 +14,8 @@ Dark VSL conversion look:
 
 ## Included
 
-- Immediate German/French language-choice dialog on the first page; language links remain in the header.
 - Original language-specific Mux IDs on each corresponding page (six IDs total).
-- Original first-page button destination restored: `index2.php` for French, `de/index2.php` for German. Completion highlights the Continue button; it does not force navigation.
+- First-page button destination: `index2.php`. Completion highlights the Continue button; it does not force navigation. The landing is French only, with no language switch.
 - Explicit user click before the external video player is loaded.
 - Native video controls; no autoplay, fake progress, forced completion, fake viewer counts, fake availability, or redirects.
 - Privacy, terms and operator-information sections.
@@ -27,6 +26,6 @@ Dark VSL conversion look:
 2. Review the spoken and visual content of all videos. The page cannot make a non-compliant video compliant.
 3. Add a real privacy/consent implementation if analytics, advertising tags, cookies or a contact form are later introduced.
 4. Confirm that the product, financial permissions, claims, fees, risk disclosure and target-country requirements are accurate.
-5. Host over HTTPS and test both `/index.html` and `/de/index.html` on the production domain.
+5. Host over HTTPS and test `/index.html` on the production domain.
 
 The build is policy-oriented preparation, not a guarantee of Google Ads approval.
