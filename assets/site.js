@@ -56,29 +56,40 @@ let player;
 let loading = false;
 let lockTime = 0;
 let correctingSeek = false;
+const fullscreenLabels = document.documentElement.lang === 'de'
+  ? { enter: 'Vollbild', exit: 'Vollbild beenden' }
+  : { enter: 'Plein écran', exit: 'Quitter le plein écran' };
 const fullscreenButton = document.createElement('button');
 fullscreenButton.type = 'button';
 fullscreenButton.className = 'fullscreen-toggle';
-fullscreenButton.textContent = '⛶';
-fullscreenButton.setAttribute('aria-label', document.documentElement.lang === 'de' ? 'Vollbild' : 'Plein écran');
+fullscreenButton.innerHTML = '<span aria-hidden="true">⛶</span>';
 shell.append(fullscreenButton);
 fullscreenButton.addEventListener('click', event => {
   event.preventDefault();
   event.stopPropagation();
   toggleFullscreen();
 });
+function activeFullscreenElement() {
+  return document.fullscreenElement || document.webkitFullscreenElement || null;
+}
+function syncFullscreenButton() {
+  const active = Boolean(activeFullscreenElement());
+  fullscreenButton.classList.toggle('is-active', active);
+  fullscreenButton.setAttribute('aria-label', active ? fullscreenLabels.exit : fullscreenLabels.enter);
+  fullscreenButton.querySelector('span').textContent = active ? '↙' : '⛶';
+}
+syncFullscreenButton();
+document.addEventListener('fullscreenchange', syncFullscreenButton);
+document.addEventListener('webkitfullscreenchange', syncFullscreenButton);
 async function toggleFullscreen() {
-  const target = player || shell;
-  if (document.fullscreenElement) {
-    await document.exitFullscreen();
+  // Always enter on the shell and leave via the document, so the same button can exit.
+  if (activeFullscreenElement()) {
+    if (document.exitFullscreen) await document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
     return;
   }
-  if (target.requestFullscreen) {
-    await target.requestFullscreen();
-    return;
-  }
-  const video = player && player.shadowRoot ? player.shadowRoot.querySelector('video') : null;
-  if (video && video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+  if (shell.requestFullscreen) await shell.requestFullscreen();
+  else if (shell.webkitRequestFullscreen) shell.webkitRequestFullscreen();
 }
 function bindSeekLock() {
   const enforce = () => {
@@ -126,7 +137,7 @@ async function loadVideo() {
     player.style.setProperty('--time-range', 'none');
     player.style.setProperty('--seek-backward-button', 'none');
     player.style.setProperty('--seek-forward-button', 'none');
-    player.style.setProperty('--fullscreen-button', 'flex');
+    player.style.setProperty('--fullscreen-button', 'none');
     player.addEventListener('ended', () => {
       document.getElementById('completed').hidden = false;
       const next = document.getElementById('continue-link');
