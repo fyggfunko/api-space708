@@ -54,6 +54,47 @@ let watchedSeconds = 0;
 let lastTick = 0;
 let player;
 let loading = false;
+let lockTime = 0;
+let correctingSeek = false;
+const fullscreenButton = document.createElement('button');
+fullscreenButton.type = 'button';
+fullscreenButton.className = 'fullscreen-toggle';
+fullscreenButton.textContent = '⛶';
+fullscreenButton.setAttribute('aria-label', document.documentElement.lang === 'de' ? 'Vollbild' : 'Plein écran');
+shell.append(fullscreenButton);
+fullscreenButton.addEventListener('click', event => {
+  event.preventDefault();
+  event.stopPropagation();
+  toggleFullscreen();
+});
+async function toggleFullscreen() {
+  const target = player || shell;
+  if (document.fullscreenElement) {
+    await document.exitFullscreen();
+    return;
+  }
+  if (target.requestFullscreen) {
+    await target.requestFullscreen();
+    return;
+  }
+  const video = player && player.shadowRoot ? player.shadowRoot.querySelector('video') : null;
+  if (video && video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+}
+function bindSeekLock() {
+  const enforce = () => {
+    if (!player || correctingSeek) return;
+    const time = player.currentTime || 0;
+    if (time > lockTime + 1.25 || time + 0.35 < lockTime) {
+      correctingSeek = true;
+      player.currentTime = lockTime;
+      correctingSeek = false;
+      return;
+    }
+    lockTime = time;
+  };
+  player.addEventListener('timeupdate', enforce);
+  player.addEventListener('seeking', enforce);
+}
 async function loadVideo() {
   if (loading) return;
   loading = true;
@@ -82,6 +123,10 @@ async function loadVideo() {
     player.setAttribute('preload', 'metadata');
     player.setAttribute('disable-tracking', '');
     player.setAttribute('aria-label', document.title);
+    player.style.setProperty('--time-range', 'none');
+    player.style.setProperty('--seek-backward-button', 'none');
+    player.style.setProperty('--seek-forward-button', 'none');
+    player.style.setProperty('--fullscreen-button', 'flex');
     player.addEventListener('ended', () => {
       document.getElementById('completed').hidden = false;
       const next = document.getElementById('continue-link');
@@ -96,9 +141,13 @@ async function loadVideo() {
     player.addEventListener('error', () => {
       status.textContent = shell.dataset.error;
     });
-    shell.replaceChildren(player);
+    const placeholder = document.getElementById('video-placeholder');
+    if (placeholder) placeholder.replaceWith(player);
+    else shell.prepend(player);
+    shell.append(fullscreenButton);
+    bindSeekLock();
     if (gateSeconds > 0) requestAnimationFrame(trackWatchTime);
-    // Native controls remain available. No autoplay, fake progress or seek blocking.
+    // Pause, volume and fullscreen stay available. Scrubbing is disabled.
   } catch (error) {
     if (script) script.remove();
     status.textContent = shell.dataset.error;
@@ -131,7 +180,10 @@ loadButton.addEventListener('click', loadVideo);
 updateGate();
 document.getElementById('replay').addEventListener('click', () => {
   if (!player) return;
+  correctingSeek = true;
+  lockTime = 0;
   player.currentTime = 0;
+  correctingSeek = false;
   document.getElementById('completed').hidden = true;
   player.play().catch(() => { /* Browser may require use of the native play control. */ });
 });
