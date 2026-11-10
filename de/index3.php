@@ -8,7 +8,7 @@
 <nav aria-label="Sprache" class="languages"><a data-language="fr" href="../index3.php" lang="fr">Français</a><a data-language="de" href="./index3.php" lang="de">Deutsch</a></nav></header>
 <main><section class="watch" aria-label="VIDEO-PRÄSENTATION">
 <div class="video-shell" id="video-shell" data-playback="wFas1LjhM00InP2qlPhPeWXaiH6LckVoPwZdht01SoLig" data-error="Der Player konnte nicht geladen werden. Versuchen Sie es erneut oder kommen Sie später zurück." data-retry="Erneut versuchen">
-<div id="video-placeholder"><span class="play-symbol" aria-hidden="true">▶</span><p>Präsentation auf Deutsch</p><button class="button" id="load-video" type="button">Video ansehen</button><p class="disclosure">Der externe Mux-Player wird erst nach Ihrem Klick geladen. Dabei werden Ihre IP-Adresse und technische Informationen an diesen Anbieter übermittelt.</p></div></div>
+<div id="video-placeholder"><p>Präsentation auf Deutsch</p><button class="button" id="load-video" type="button">Video ansehen</button></div></div>
 <section class="intro"><p class="brand-kicker">intartlecture</p><p class="eyebrow">VIDEO-PRÄSENTATION</p><h1>Eine Präsentation.<br><span class="accent">In Ihrem eigenen Tempo.</span></h1><p class="lede">Sehen Sie sich die Präsentation der in diesen Videos beschriebenen automatisierten Plattform an. Prüfen Sie Erläuterungen, Grenzen und Risiken, bevor Sie eine Entscheidung treffen.</p></section>
 <p class="video-status" id="video-status" role="status"></p>
 <div class="video-caption"><p>Sehen Sie das Video bis zum Ende an, um einen vollständigen Eindruck zu erhalten. Sie können jederzeit pausieren oder in den Vollbildmodus wechseln. Vor- und Zurückspulen ist nicht möglich.</p></div>

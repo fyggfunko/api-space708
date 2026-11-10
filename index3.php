@@ -8,7 +8,7 @@
 <nav aria-label="Langue" class="languages"><a data-language="fr" href="./index3.php" lang="fr">Français</a><a data-language="de" href="de/index3.php" lang="de">Deutsch</a></nav></header>
 <main><section class="watch" aria-label="PRÉSENTATION VIDÉO">
 <div class="video-shell" id="video-shell" data-playback="G02O1uyX01Ol4lx14Bm4K921mgm00n8hDZTxuM786RpkQw" data-error="Le lecteur ne peut pas être chargé. Réessayez ou revenez plus tard." data-retry="Réessayer">
-<div id="video-placeholder"><span class="play-symbol" aria-hidden="true">▶</span><p>Présentation en français</p><button class="button" id="load-video" type="button">Regarder la vidéo</button><p class="disclosure">Le lecteur externe Mux sera chargé après votre clic. Votre adresse IP et des informations techniques seront alors transmises à ce prestataire.</p></div></div>
+<div id="video-placeholder"><p>Présentation en français</p><button class="button" id="load-video" type="button">Regarder la vidéo</button></div></div>
 <section class="intro"><p class="brand-kicker">intartlecture</p><p class="eyebrow">PRÉSENTATION VIDÉO</p><h1>Une présentation à regarder,<br><span class="accent">à votre rythme.</span></h1><p class="lede">Découvrez la présentation de la plateforme automatisée évoquée dans ces vidéos. Prenez le temps d’examiner les explications, les limites et les risques avant toute décision.</p></section>
 <p class="video-status" id="video-status" role="status"></p>
 <div class="video-caption"><p>Pour avoir une vue complète, regardez la vidéo jusqu’à la fin. Vous pouvez mettre en pause ou passer en plein écran à tout moment. La lecture ne peut pas être avancée ni reculée.</p></div>
