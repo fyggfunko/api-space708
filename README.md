@@ -4,13 +4,12 @@ Clean bilingual (FR/DE) presentation landing with Mux video steps and an optiona
 
 ## Design direction
 
-Quant-inspired trading/AI look:
+Dark VSL conversion look:
 
-- Charcoal canvas, warm peach/orange CTAs, green status badge
-- Instrument Sans typography
-- Subtle grid + warm node atmosphere (decorative only)
-- Centered hero, pill buttons
-- Soft status gate instead of urgency-countdown copy
+- Pure black canvas, Montserrat, bold uppercase headlines
+- Neon green / cyan gradient accents
+- Important alert box for the watch-time gate
+- Centered layout; soft status timer (not fake scarcity)
 
 
 ## Included

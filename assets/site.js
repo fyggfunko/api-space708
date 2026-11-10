@@ -77,7 +77,7 @@ async function loadVideo() {
     player.id = 'video_main';
     player.setAttribute('playback-id', shell.dataset.playback);
     player.setAttribute('stream-type', 'on-demand');
-    player.setAttribute('accent-color', '#f0b36a');
+    player.setAttribute('accent-color', '#39ff88');
     player.setAttribute('playsinline', '');
     player.setAttribute('preload', 'metadata');
     player.setAttribute('disable-tracking', '');
