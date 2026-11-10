@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font variations — intartlecture</title>
+<link rel="stylesheet" href="./assets/site.css">
+<style>
+  body { padding-bottom: 80px; }
+  .compare {
+    position: relative;
+    z-index: 1;
+    width: min(100% - 48px, 1100px);
+    margin: 28px auto 0;
+  }
+  .compare h1 {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+  .compare > p { color: var(--ink-soft); max-width: 60ch; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(14, 22, 38, 0.85);
+    padding: 20px 18px 22px;
+    min-height: 280px;
+  }
+  .card .name {
+    margin: 0 0 4px;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 700;
+  }
+  .card .stack {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  .card .sample-brand {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, #fff 10%, var(--cyan) 55%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .card .sample-h {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  .card .sample-p {
+    margin: 0 0 14px;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .card .sample-mono {
+    font-family: var(--font-mono);
+    color: var(--cyan);
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+  }
+  .card .pick {
+    display: inline-flex;
+    margin-top: 16px;
+  }
+  .card[data-fonts="editorial"] {
+    --font-display: "Newsreader", Georgia, serif;
+    --font-body: "Public Sans", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+    font-family: var(--font-body);
+  }
+  .card[data-fonts="editorial"] .sample-brand,
+  .card[data-fonts="editorial"] .sample-h {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .card[data-fonts="terminal"] {
+    --font-display: "Archivo", sans-serif;
+    --font-body: "Public Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    font-family: var(--font-body);
+  }
+  .card[data-fonts="terminal"] .sample-brand,
+  .card[data-fonts="terminal"] .sample-h {
+    font-stretch: condensed;
+    letter-spacing: -0.01em;
+  }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="compare">
+    <h1>Variations de polices</h1>
+    <p>Trois directions typographiques sur le même trading/AI layout. Choisissez une variante — elle s’applique aussi aux pages principales via le sélecteur en bas à droite.</p>
+    <div class="grid">
+      <article class="card" data-fonts="studio">
+        <p class="name">A · Studio</p>
+        <p class="stack">Bricolage Grotesque · Source Sans 3 · Plex Mono</p>
+        <p class="sample-brand">intartlecture</p>
+        <p class="sample-h">Une présentation à regarder, à votre rythme.</p>
+        <p class="sample-p">Découvrez la présentation de la plateforme automatisée évoquée dans ces vidéos.</p>
+        <p class="sample-mono">10:00</p>
+        <a class="button pick" href="index.html?language-selected=fr&fonts=studio">Appliquer</a>
+      </article>
+      <article class="card" data-fonts="editorial">
+        <p class="name">B · Editorial</p>
+        <p class="stack">Newsreader · Public Sans · Plex Mono</p>
+        <p class="sample-brand">intartlecture</p>
+        <p class="sample-h">Une présentation à regarder, à votre rythme.</p>
+        <p class="sample-p">Découvrez la présentation de la plateforme automatisée évoquée dans ces vidéos.</p>
+        <p class="sample-mono">10:00</p>
+        <a class="button pick" href="index.html?language-selected=fr&fonts=editorial">Appliquer</a>
+      </article>
+      <article class="card" data-fonts="terminal">
+        <p class="name">C · Terminal</p>
+        <p class="stack">Archivo · Public Sans · JetBrains Mono</p>
+        <p class="sample-brand">intartlecture</p>
+        <p class="sample-h">Une présentation à regarder, à votre rythme.</p>
+        <p class="sample-p">Découvrez la présentation de la plateforme automatisée évoquée dans ces vidéos.</p>
+        <p class="sample-mono">10:00</p>
+        <a class="button pick" href="index.html?language-selected=fr&fonts=terminal">Appliquer</a>
+      </article>
+    </div>
+  </div>
+  <script src="./assets/site.js" defer></script>
+</body>
+</html>

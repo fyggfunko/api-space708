@@ -1,6 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@95..125,500;95..125,600;95..125,700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=Public+Sans:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 
 :root {
+  /* A — studio: current default */
   --font-display: "Bricolage Grotesque", "Avenir Next Condensed", "Segoe UI", sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
@@ -815,4 +816,79 @@ footer nav a:hover { color: var(--cyan); }
 
   .lead-card { padding: 20px 16px; }
   .chapters { grid-template-columns: 1fr; }
+}
+
+/* —— Font variations (toggle via ?fonts= / data-fonts) —— */
+html[data-fonts="editorial"] {
+  --font-display: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --font-body: "Public Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+html[data-fonts="editorial"] h1 {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+html[data-fonts="editorial"] .brand,
+html[data-fonts="editorial"] .brand-kicker {
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+html[data-fonts="terminal"] {
+  --font-display: "Archivo", "Avenir Next Condensed", "Segoe UI", sans-serif;
+  --font-body: "Public Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+html[data-fonts="terminal"] .brand,
+html[data-fonts="terminal"] .brand-kicker,
+html[data-fonts="terminal"] h1,
+html[data-fonts="terminal"] h2 {
+  font-stretch: condensed;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+html[data-fonts="terminal"] .eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+}
+
+.font-switcher {
+  position: fixed;
+  z-index: 40;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(8, 14, 26, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+}
+
+.font-switcher a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.font-switcher a[aria-current="true"] {
+  background: rgba(46, 230, 214, 0.14);
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .font-switcher {
+    left: 16px;
+    right: 16px;
+    justify-content: center;
+  }
 }

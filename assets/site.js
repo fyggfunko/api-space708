@@ -1,5 +1,35 @@
 'use strict';
 
+// Font stack variants: studio (default) | editorial | terminal
+(function applyFontVariant() {
+  const allowed = new Set(['studio', 'editorial', 'terminal']);
+  const params = new URL(location.href).searchParams;
+  const fromQuery = params.get('fonts');
+  const stored = localStorage.getItem('intart-fonts');
+  const choice = allowed.has(fromQuery) ? fromQuery : (allowed.has(stored) ? stored : 'studio');
+  if (choice === 'studio') document.documentElement.removeAttribute('data-fonts');
+  else document.documentElement.setAttribute('data-fonts', choice);
+  if (fromQuery && allowed.has(fromQuery)) localStorage.setItem('intart-fonts', fromQuery);
+
+  if (document.body && !document.querySelector('.font-switcher')) {
+    const nav = document.createElement('nav');
+    nav.className = 'font-switcher';
+    nav.setAttribute('aria-label', 'Font variations');
+    nav.innerHTML = [
+      ['studio', 'Studio'],
+      ['editorial', 'Editorial'],
+      ['terminal', 'Terminal'],
+    ].map(([id, label]) => {
+      const url = new URL(location.href);
+      url.searchParams.set('fonts', id);
+      url.searchParams.set('language-selected', document.documentElement.lang);
+      const current = choice === id ? ' aria-current="true"' : '';
+      return `<a href="${url.pathname + url.search}"${current}>${label}</a>`;
+    }).join('');
+    document.body.append(nav);
+  }
+})();
+
 // Decorative trading/AI atmosphere — no claims, no fake metrics.
 (function injectAtmosphere() {
   if (document.querySelector('.atmosphere')) return;
