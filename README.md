@@ -4,7 +4,7 @@ French presentation landing with Mux video steps and an optional lead form.
 
 ## Design direction
 
-Dark VSL conversion look:
+Dark presentation look:
 
 - Pure black canvas, Montserrat, bold uppercase headlines
 - Neon green / cyan gradient accents
