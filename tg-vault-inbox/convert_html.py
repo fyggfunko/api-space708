@@ -21,6 +21,7 @@ class ExportParser(HTMLParser):
         self.buf: list[str] = []
         self.last_author = ""
         self.in_header = False
+        self.in_title = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attr = {key: value or "" for key, value in attrs}
@@ -28,8 +29,13 @@ class ExportParser(HTMLParser):
         self.stack.append((tag, attr.get("class", "")))
         depth = len(self.stack)
 
+        if tag == "title":
+            self.in_title = True
+            self._start_capture("chat", depth)
         if tag == "div" and "page_header" in classes:
             self.in_header = True
+        if tag == "div" and self.in_header and "name" in classes and "bold" in classes:
+            self._start_capture("chat", depth)
         if tag == "div" and self.in_header and classes == {"text", "bold"}:
             self._start_capture("chat", depth)
 
@@ -58,6 +64,8 @@ class ExportParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if self.capture and len(self.stack) == self.capture_depth:
             self._finish_capture()
+        if tag == "title":
+            self.in_title = False
         if self.stack:
             ended = self.stack.pop()
             if "page_header" in ended[1].split():
