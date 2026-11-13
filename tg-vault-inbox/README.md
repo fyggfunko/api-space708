@@ -1,6 +1,9 @@
 # tg-vault-inbox
 
-Telegram-бот → пишет сообщения в Obsidian Vault (`Projects/_inbox`).
+Два режима записи рабочих чатов в Obsidian Vault (`Projects/_inbox`).
+
+- **Свой аккаунт** (`user_collect.py`) — читает чаты, в которых ты уже состоишь, включая историю. Это основной режим.
+- **Бот** (`bot.py`) — только новые сообщения в чатах, куда бота добавили.
 
 ## Setup (Mac)
 
@@ -12,14 +15,33 @@ pip install -r requirements.txt
 cp .env.example .env
 ```
 
-В `.env`:
+В `.env` для своего аккаунта:
 
 ```env
-BOT_TOKEN=...токен от BotFather...
+API_ID=...
+API_HASH=...
 VAULT_PATH=/Users/mr.anderson/Documents/Obsidian Vault
+CHATS=
+HISTORY_LIMIT=100
 ```
 
-Запуск:
+`API_ID` и `API_HASH` берутся на https://my.telegram.org → API development tools. Это не токен бота. Файл сессии `user.session` остаётся только на этом компьютере.
+
+Список чатов:
+
+```bash
+python user_collect.py --list
+```
+
+Впиши нужные названия в `CHATS` и собери сообщения:
+
+```bash
+python user_collect.py
+```
+
+При первом запуске Telegram спросит телефон и код в этом терминале. Код и сессию никуда не отправляй.
+
+Бот, если нужен отдельно. Запуск:
 
 ```bash
 python bot.py

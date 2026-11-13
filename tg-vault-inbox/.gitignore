@@ -3,3 +3,6 @@
 __pycache__/
 *.pyc
 .chat-map.json
+.user-state.json
+*.session
+*.session-journal
