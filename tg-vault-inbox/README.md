@@ -56,6 +56,23 @@ python bot.py
 5. Пиши в чат как обычно — сообщения появятся в `Projects/_inbox/`
 6. `/digest` — дневная выжимка в `_inbox`
 
+## HTML-экспорт
+
+Telegram Desktop часто отдаёт `messages.html`, а не JSON. Конвертер делает из него markdown-источник:
+
+```bash
+python3 convert_html.py "/Users/mr.anderson/Downloads/ChatExport_Performers/messages.html" \
+  -o "/Users/mr.anderson/Documents/Obsidian Vault/Projects/_inbox/performers.md"
+```
+
+Потом в Cursor, из папки vault:
+
+```text
+Прочитай Projects/_inbox/performers.md.
+Собери по шаблону Templates/Project Context заметку Projects/performers/context.md.
+Сырой экспорт в заметку не копируй.
+```
+
 ## Дальше
 
 Открой digest в Cursor (папка vault) и попроси:
